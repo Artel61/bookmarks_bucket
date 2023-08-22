@@ -1,0 +1,4 @@
+psycopg2-binary
+Django>=3.2
+django-environ>=0.10
+Pillow>=10.0

@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import Bookmark, Collection, LinkType
+
+
+admin.site.register(LinkType)
+admin.site.register(Collection)
+admin.site.register(Bookmark)
