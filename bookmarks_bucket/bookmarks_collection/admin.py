@@ -1,8 +1,7 @@
 from django.contrib import admin
 
-from .models import Bookmark, Collection, LinkType
+from .models import Collection, LinkType
 
 
 admin.site.register(LinkType)
 admin.site.register(Collection)
-admin.site.register(Bookmark)
