@@ -45,10 +45,10 @@ class OpenGraphMarkup:
     title: Optional[str] = ''
     description: Optional[str] = ''
     url: Optional[str] = ''
-    preview: Optional[str] = None
+    preview: Optional[bytes] = None
 
     @classmethod
-    def from_fict(cls, data: Dict[str, str]) -> 'OpenGraphMarkup':
+    def from_dict(cls, data: Dict[str, str]) -> 'OpenGraphMarkup':
         content_type = data.get(LinkAttributes.TYPE.value) or DEFAULT_LINK_TYPE.value
 
         if content_type not in EXTENDED_LINK_TYPES:
@@ -59,5 +59,5 @@ class OpenGraphMarkup:
             title=data.get(LinkAttributes.TITLE.value, ''),
             description=data.get(LinkAttributes.DESCRIPTION.value, ''),
             url=data.get(LinkAttributes.URL.value, ''),
-            preview=data.get(LinkAttributes.IMAGE.value, '')
+            preview=data.get(LinkAttributes.IMAGE.value, b'')
         )

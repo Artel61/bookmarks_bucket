@@ -4,7 +4,7 @@
 https://ogp.me/
 """
 from html.parser import HTMLParser
-from typing import Dict
+from typing import Any, Dict
 
 
 class OpenGraphParser(HTMLParser):
@@ -20,7 +20,7 @@ class OpenGraphParser(HTMLParser):
         self._meta_markup = dict()
 
     @property
-    def opengraph_markup(self) -> Dict[str, str]:
+    def opengraph_markup(self) -> Dict[str, Any]:
         return self._meta_markup
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
