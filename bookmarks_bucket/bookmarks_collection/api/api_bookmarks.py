@@ -26,7 +26,7 @@ input_url_param = openapi.Schema(
     type=openapi.TYPE_STRING,
 )
 input_collection_param = openapi.Schema(
-    title='collection',
+    title='data',
     description='Идентификатор коллекции',
     type=openapi.TYPE_INTEGER,
 )
@@ -115,8 +115,7 @@ class BookmarkAPIActions(ViewSet):
     @action(methods=['PUT'], detail=True)
     def add_bookmark_to_collection(self, request: Request, pk=None) -> Response:
         """Добавить закладку в коллекцию"""
-        req_data = request.data
-        id_collection = req_data.get('collection')
+        id_collection = request.data
 
         bookmark = self.get_object(pk)
         if not bookmark:
@@ -132,7 +131,8 @@ class BookmarkAPIActions(ViewSet):
         if collection.user != request.user:
             return Response(status=status.HTTP_403_FORBIDDEN, data='Нельзя подсовывать людям чужие закладки')
 
-        if collection.filter(bookmarks__id=bookmark.pk).first():
+        bookmarks = collection.bookmarks.all()
+        if bookmark in bookmarks:
             return Response(status=status.HTTP_400_BAD_REQUEST, data='Закладка уже в коллекции')
 
         collection.bookmarks.add(bookmark)
