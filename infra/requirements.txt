@@ -1,5 +1,7 @@
 psycopg2-binary
 Django>=3.2
 django-environ>=0.10
+djangorestframework>=3.14
+drf-yasg>=1.21
 requests>=2.31
 Pillow>=10.0

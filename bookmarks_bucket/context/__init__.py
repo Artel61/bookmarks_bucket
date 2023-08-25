@@ -12,6 +12,8 @@ from .parser import OpenGraphParser
 class BookmarksCollectionController:
     """Контроллер для работы с закладками на страницы сайтов"""
 
+    img_info_splitter = b';b64;'
+
     @classmethod
     def get_page_info_by_url(cls, url: str) -> OpenGraphMarkup:
         """Попытка получить веб страницу и определить разметку OpenGraph"""
@@ -44,7 +46,8 @@ class BookmarksCollectionController:
         """Попытка загрузить превью страницы"""
         response = requests.get(url, stream=True)
         if response.status_code == 200:
+            file_ext = url.split('.')[-1]
             raw_image = base64.b64encode(response.content)
-            return raw_image
+            return cls.img_info_splitter.join([file_ext.encode(), raw_image])
 
         return b""

@@ -4,21 +4,25 @@
 """
 
 
-class NotFoundError(Exception):
+class CustomError(Exception):
+    """Кастомный класс ошибок"""
+
+
+class NotFoundError(CustomError):
     """Указанный ресурс не найден"""
 
 
-class ResourceGettingError(Exception):
+class ResourceGettingError(CustomError):
     """Не удаётся выполнить запрос"""
 
 
-class ResourceFormatError(Exception):
+class ResourceFormatError(CustomError):
     """Ответ не соответствует ожидаемому формату"""
 
 
-class ParsingError(Exception):
+class ParsingError(CustomError):
     """Неверная структура ответа"""
 
 
-class UnknownTypeError(Exception):
+class UnknownTypeError(CustomError):
     """Неизвестный тип страницы"""
