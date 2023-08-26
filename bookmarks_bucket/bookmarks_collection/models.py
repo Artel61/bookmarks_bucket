@@ -58,7 +58,7 @@ class Bookmark(ModelManageMixin, models.Model):
 
     page_title = models.CharField(verbose_name='Заголовок страницы', null=False, blank=False)
     short_description = models.TextField(verbose_name='Краткое описание', null=False, default='')
-    page_url = models.URLField(verbose_name='Ссылка на страницу', null=False, blank=False, unique=True)
+    page_url = models.URLField(verbose_name='Ссылка на страницу', null=False, blank=False)
     page_type = models.ForeignKey(LinkType, on_delete=models.DO_NOTHING, verbose_name='Тип ссылки', null=False)
     preview = models.ImageField(verbose_name='Картинка превью', upload_to='preview')
 
@@ -67,6 +67,7 @@ class Bookmark(ModelManageMixin, models.Model):
     class Meta:
         verbose_name = 'Закладка'
         verbose_name_plural = 'Закладки'
+        unique_together = ('page_url', 'user')
 
 
 class Collection(ModelManageMixin, models.Model):

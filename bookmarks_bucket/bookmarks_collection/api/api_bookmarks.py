@@ -3,8 +3,8 @@ from typing import Optional
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.viewsets import ReadOnlyModelViewSet, ViewSet
@@ -15,6 +15,7 @@ from context import BookmarksCollectionController
 from context.constants import OpenGraphMarkup
 from context.errors import CustomError, NotFoundError
 
+from .authentication import CustomTokenAuthentication
 from .serializers import BookmarkSerializer
 
 
@@ -57,7 +58,8 @@ put_response_map = {
 
 class BookmarkAPIViewSet(ReadOnlyModelViewSet):
     """Просмотр закладок"""
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [CustomTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Bookmark.objects.all()
     serializer_class = BookmarkSerializer
 
@@ -67,6 +69,8 @@ class BookmarkAPIViewSet(ReadOnlyModelViewSet):
 
 class BookmarkAPIActions(ViewSet):
     """Операции с закладками"""
+    authentication_classes = [CustomTokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
     def get_object(self, pk) -> Optional[Bookmark]:
         return Bookmark.objects.filter(id=pk).first()

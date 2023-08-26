@@ -1,16 +1,16 @@
-from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
-from rest_framework.request import Request
-from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
 from bookmarks_collection.models import Collection
+
+from .authentication import CustomTokenAuthentication
 from .serializers import CollectionSerializer
 
 
 class CollectionsAPIViewSet(ModelViewSet):
     """Операции с коллекциями"""
-    authentication_classes = [SessionAuthentication]
+    authentication_classes = [CustomTokenAuthentication]
+    permission_classes = [IsAuthenticated]
     queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 
