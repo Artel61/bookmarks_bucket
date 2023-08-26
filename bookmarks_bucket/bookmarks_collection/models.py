@@ -4,9 +4,11 @@ import hashlib
 from django.contrib.auth.models import User
 from django.core.files.base import ContentFile
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 from context import BookmarksCollectionController
-from context.constants import OpenGraphMarkup
+from context.constants import OpenGraphMarkup, EXTENDED_LINK_TYPES
 
 
 class LinkType(models.Model):
@@ -80,3 +82,9 @@ class Collection(ModelManageMixin, models.Model):
     class Meta:
         verbose_name = 'Коллекция'
         verbose_name_plural = 'Коллекции'
+
+
+@receiver(post_save, sender=LinkType)
+def synchronize_add_link_type(sender, instance, **kwargs):
+    """Синхронизация типов контента после добавления новой записи"""
+    EXTENDED_LINK_TYPES.add(instance.cypher)
