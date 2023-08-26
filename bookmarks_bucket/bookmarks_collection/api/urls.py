@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 
 from .api_bookmarks import BookmarkAPIActions, BookmarkAPIViewSet
 from .api_collections import CollectionsAPIViewSet
-from.api_sign_up import RegisterUserView
+from .api_sign_up import RegisterUserView
 
 
 router = DefaultRouter()
