@@ -1,2 +1,4 @@
 /bookmarks_bucket/.env
 /bookmarks_bucket/static/
+/.docker.env
+/infra/service/bookmarks_bucket/

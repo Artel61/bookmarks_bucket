@@ -21,7 +21,7 @@
  ```shell
 pip insall --upgrade pip
 
-pip install -r ./infra/requirements.txt
+pip install -r ./infra/service/requirements.txt
 ```
 
  - настройка окружения
@@ -50,3 +50,32 @@ python ./manage.py runserver
 ```
 
 ## Запуск в контейнере.
+
+ - Перейдите в корневой каталог проекта (в котором лежит `docker-compose.yml`).
+ - Скопируйте `.docker.env.dist` и сохраните его в этом же каталоге под именем `.docker.env`.
+ - Заполните `.docker.env`: укажите имя и пароль пользователя БД, а также имя учётной записи администратора Django.
+ - Скопируйте `.env.dist` из каталога с кодом в каталог `infra/service` под именем `.service.env`.
+ - Заполните строку подключения согласно имени контейнера с БД и настройкам из `.docker.env`.
+ - Скопируйте каталог с исходным кодом `bookmarks_bucket` в `infra/service`.
+ - Перейдите в корневой каталог (в котором лежит `docker-compose.yml`).
+ - Запустите в консоли сборку контейнеров
+
+ ```shell
+docker-compose build
+```
+
+ - Запустите контейнеры
+ ```shell
+docker-compose up -d
+```
+
+ - Если это первый запуск, то выполните скрипт развёртывания в контейнере с кодом
+ ```shell
+docker-compose exec bmb bash
+cd /app
+./deploy.sh
+```
+
+ - Введите пароль суперпользователя, подтвердите пароль суперпользователя.
+ - Выйдите из контейнера (Ctrl+D)
+ - Сервис доступен с хостовой машины по адресу localhost:8000
