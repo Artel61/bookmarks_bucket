@@ -85,7 +85,7 @@ class BookmarkAPIActions(ViewSet):
         if not url:
             return Response(status=status.HTTP_400_BAD_REQUEST, data='Ожидалась URL строка')
 
-        same_url = Bookmark.objects.filter(page_url=url).first()
+        same_url = Bookmark.objects.filter(page_url=url, user=request.user).first()
         if same_url:
             return Response(status=status.HTTP_400_BAD_REQUEST, data='Закладка с таким URL уже существует')
 
